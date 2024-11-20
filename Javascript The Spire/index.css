@@ -1,0 +1,152 @@
+/* Establecer un fondo oscuro con un patrón similar al del juego */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1c1c1c;
+    font-family: 'Cinzel', serif;
+    color: #f0e3c1;
+    background-image: url('fondo_index.jpg'); /* Cambia esta URL por una imagen de fondo adecuada */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Estilos del título */
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    color: #ffd700; /* Un dorado brillante */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    margin-top: 50px;
+}
+
+/* Estilos del menú */
+.menu {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu li {
+    display: block; /* Se cambia esto a block en la media query */
+    margin: 10px 0; /* Ajuste de espacio entre elementos en columna */
+    width: 200px;
+}
+
+.menu a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #f0e3c1;
+    background-color: #8b0000; /* Rojo oscuro */
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+    display: block; /* Hace que el enlace llene el espacio del li */
+    width: 100%;    text-align: center; /* Centra el texto en el enlace */
+    padding: 10px 20px;
+}
+
+.menu a:hover {
+    background-color: #ffd700; /* Cambiar a dorado en hover */
+    color: #1c1c1c; /* Texto oscuro cuando se resalta */
+    transform: scale(1.1);
+}
+
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    /* Aquí se hace que el menú sea vertical en móviles */
+    .menu ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu li {
+        display: block; /* Asegura que cada li ocupe todo el ancho disponible */
+        margin: 10px 0; /* Ajuste de espacio entre elementos en columna */
+        width: 200px; /* Establece el mismo ancho para todos los li */
+    }
+
+    .menu a {
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        width: 100%; /* Hace que los enlaces ocupen todo el ancho del li */
+    }
+}
+
+.social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espacio entre los enlaces */
+    margin-top: 20px; /* Margen superior */
+}
+
+.social a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #f0e3c1;
+    background-color: #8b0000; /* Rojo oscuro */
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+    display: block; /* Hace que el enlace llene el espacio del li */
+    width: 500px;
+    text-align: center; /* Centra el texto en el enlace */
+    padding: 10px 20px;
+}
+
+.social a img {
+    width: auto; /* Ancho de los íconos */
+    height: 20px; /* Alto de los íconos */
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
+.social a:hover {
+    color: #007bff; /* Color al pasar el mouse */
+}
+
+.game-placeholder {
+    font-family: 'Roboto';
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo más oscuro y opaco */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+.game-placeholder h2 {
+    color: #f1c40f; /* Color dorado para destacar */
+    font-size: 24px; /* Tamaño de fuente mayor */
+}
+
+.game-placeholder h3 {
+    color: #e67e22; /* Color naranja para subtítulos */
+    font-size: 20px; /* Tamaño de fuente mayor */
+}
+
+.game-placeholder p {
+    color: #ecf0f1; /* Color gris claro para el texto */
+    font-size: 16px; /* Tamaño de fuente estandarizado */
+}
+
+.game-placeholder ul,
+.game-placeholder ol {
+    margin-left: 20px; /* Margen a la izquierda para listas */
+    color: #bdc3c7; /* Color gris para los elementos de la lista */
+}

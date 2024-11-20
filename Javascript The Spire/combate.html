@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combate</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="combate.css">
+</head>
+
+<body>
+    <script src="HeroAttack.js"></script>
+    <script src="deck.js"></script>
+    <script src="MonsterAttack.js"></script>
+
+
+    <div class="parent">
+        <div class="div1" id="combat"></div>
+        <div class="div4">
+            <img src="mario.png" alt="">
+        </div>
+        <div class="div5">
+            <img id='monsterImage' alt="">
+        </div>
+        <div class="div6">
+            <progress max="100" id="hero-HP"></progress>
+            <div class="textHP">
+                <h2><span id="hero-actualHP"></span>/<span id="hero-totalHP">100</span></h2>
+
+            </div>
+            <div>
+                <!-- Estadísticas del héroe -->
+                <p id="hero-defense">Defensa: <span id="hero-defensePoint">0</span></p>
+                <p id="hero-burn">Quemadura: <span id="hero-burnPoint">0</span></p>
+                <p id="hero-poison">Veneno: <span id="hero-poisonPoint">0</span></p>
+                <p id="hero-freeze">Congelamiento: <span id="hero-freezePoint">0</span></p>
+            </div>
+        </div>
+        <div class="div2" id="stat"></div>
+        <div class="div8">
+            <h2>Puntos </h2>
+            <h2>restantes</h2>
+            <h2><span id="energyPoint">3</span></h2>
+            <button class="turn-button" id="turn-button">Pasar turno</button>
+        </div>
+        <div class="div7">
+            <progress max="70" id="monster-HP" value="70"></progress>
+            <div class="textHP">
+                <h2><span id="monster-actualHP">70</span>/<span id="monster-totalHP">70</span></h2>
+            </div>
+            <div>
+                <!-- Estadísticas del enemigo -->
+                <p id="monster-defense">Defensa: <span id="monster-defensePoint">0</span></p>
+                <p id="monster-burn">Quemadura: <span id="monster-burnPoint">0</span></p>
+                <p id="monster-poison">Veneno: <span id="monster-poisonPoint">0</span></p>
+                <p id="monster-freeze">Congelamiento: <span id="monster-freezePoint">0</span></p>
+            </div>
+        </div>
+        <div class="div3" id="hand">
+        </div>
+    </div>
+
+    <script>
+        generarCartas();
+
+        function atacar(event) {
+            const card = event.currentTarget;
+            const tipoCarta = card.querySelector('.card-header').textContent;
+            const valorCarta = parseInt(card.querySelector('.card-value').textContent);
+            const actionPoint = document.getElementById('energyPoint');
+            if (actionPoint.textContent > 0) {
+                let promise; // Inicializar la promesa
+                switch (tipoCarta) {
+                    case 'Daño':
+                        promise = damage(valorCarta);
+                        break;
+                    case 'Curación':
+                        promise = heal(valorCarta);
+                        break;
+                    case 'Defensa':
+                        promise = defense(valorCarta);
+                        break;
+                    case 'Fuego':
+                        promise = fireAttack(valorCarta);
+                        break;
+                    case 'Hielo':
+                        promise = iceAttack(valorCarta);
+                        break;
+                    default:
+                        console.error('Tipo de carta no reconocido:', tipoCarta);
+                        return; // Salir si el tipo no es reconocido
+                }
+                // Esperar a que se complete la acción
+                if (promise) {
+                    promise.then(() => {
+                        actionPoint.textContent = actionPoint.textContent - 1; // Restar un punto de acción
+                        removeCard(card);
+                        // Comprobar si no hay puntos de acción restantes
+                        if (actionPoint.textContent === '0') {
+                            setTimeout(() => {
+                                pasarTurno();
+                            }, 200)
+                        }
+                    });
+                }
+            }
+        }
+
+        function turnoJugador() {
+            checkWinOrLoss();
+            removeAllCard();
+            alert('Es tu turno ahora.');
+            generarCartas();
+            document.getElementById('energyPoint').textContent = parseInt(document.getElementById('energyPoint').textContent) + 3; // Añade 3 puntos de energía al jugador
+            console.log("Turno del jugador iniciado");
+            document.getElementById('turn-button').style.display = 'block';
+
+        }
+
+        function pasarTurno() {
+            alert('Pasando turno...');
+            checkWinOrLoss();
+            document.getElementById('turn-button').style.display = 'none';
+            removeAllCard();
+            startMonsterTurn();
+        }
+
+        document.getElementById('turn-button').addEventListener('click', pasarTurno);
+
+
+       
+
+
+
+        function checkWinOrLoss() {
+            const heroHP = parseInt(document.getElementById('hero-actualHP').textContent);
+            const monsterHP = parseInt(document.getElementById('monster-actualHP').textContent);
+
+            if (monsterHP < 1) {
+                alert('¡Has ganado!');
+                sessionStorage.setItem('vidaActual', parseInt(document.getElementById('hero-actualHP').textContent));
+                window.location.href = 'mapa.html';
+
+            } else if (heroHP < 1) {
+                alert('¡Has perdido!');
+
+               
+
+                window.location.href = 'index.html';
+
+            }
+        }
+    </script>
+    <script src="onload.js"></script>
+</body>
+
+</html>

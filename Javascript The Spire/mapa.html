@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slay the Spire Map</title>
+  <style>
+    canvas {
+      background-color: #000;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="mapCanvas" width="800" height="600"></canvas>
+
+  <script>
+    const canvas = document.getElementById('mapCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const nodeRadius = 20;
+    const mapLevels = 10;  // Number of levels (rows) in the map
+    const nodesPerLevel = 4;  // Number of nodes per level
+
+    // Generate nodes
+    const nodes = [];
+    for (let level = 0; level < mapLevels; level++) {
+      const y = 50 + level * 60;  // Vertical spacing
+      nodes[level] = [];
+      for (let i = 0; i < nodesPerLevel; i++) {
+        const x = 100 + i * 150;  // Horizontal spacing
+        nodes[level].push({ x, y, connections: [] });
+      }
+    }
+
+    // Connect nodes randomly
+    for (let level = 0; level < mapLevels - 1; level++) {
+      for (const node of nodes[level]) {
+        // Connect to a random node in the next level
+        const nextLevelNode = nodes[level + 1][Math.floor(Math.random() * nodesPerLevel)];
+        node.connections.push(nextLevelNode);
+      }
+    }
+
+    // Draw nodes and connections
+    function drawMap() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw connections
+      nodes.forEach(level => {
+        level.forEach(node => {
+          node.connections.forEach(connection => {
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(connection.x, connection.y);
+            ctx.strokeStyle = 'white';
+            ctx.stroke();
+          });
+        });
+      });
+
+      // Draw nodes
+      nodes.forEach(level => {
+        level.forEach(node => {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, nodeRadius, 0, 2 * Math.PI);
+          ctx.fillStyle = 'red';
+          ctx.fill();
+          ctx.strokeStyle = 'white';
+          ctx.stroke();
+        });
+      });
+    }
+
+    // Initial draw
+    drawMap();
+  </script>
+</body>
+</html>
